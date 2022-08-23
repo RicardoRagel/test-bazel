@@ -10,10 +10,12 @@ cc_library(
     visibility = ["//car:__pkg__"],     # Allow car pakage to use this target
 )
 
-# For the same purpose, we can use: 
-#   copts = ["-I/include"]
-# instead if
+# For the same purpose, instead of
 #   strip_include_prefix = "include",
+# We can use
+#   copts = ["-Ivehicle/include"]
+# However, this same vehicle/include folder would need to be also included 
+# in the car project, getting difficult if the dependency graph is bigger.
 
 # Visibility can be:
 #   visibility = ["//visibility:public"] 
