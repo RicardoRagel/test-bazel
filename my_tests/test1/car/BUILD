@@ -1,3 +1,4 @@
+# No comments, check vehicle package's BUILD for them
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
@@ -8,5 +9,3 @@ cc_library(
     deps = ["//vehicle:vehicle"],
     visibility = ["//main:__pkg__"],
 )
-
-# Visibility can be visibility = ["//visibility:public"], so all pkgs can see it
