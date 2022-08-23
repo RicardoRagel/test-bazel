@@ -10,6 +10,11 @@ cc_library(
     visibility = ["//car:__pkg__"],     # Allow car pakage to use this target
 )
 
+# For the same purpose, we can use: 
+#   copts = ["-I/include"]
+# instead if
+#   strip_include_prefix = "include",
+
 # Visibility can be:
 #   visibility = ["//visibility:public"] 
 # so all pkgs can see it.
