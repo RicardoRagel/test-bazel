@@ -1,0 +1,4 @@
+local_repository(
+    name = "test1",
+    path = "../test1",
+)

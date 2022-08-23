@@ -7,5 +7,5 @@ cc_library(
     hdrs = ["include/Car.h"],
     srcs = ["src/Car.cpp"],
     deps = ["//vehicle:vehicle"],
-    visibility = ["//main:__pkg__"],
+    visibility = ["//visibility:public"],
 )
