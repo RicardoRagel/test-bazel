@@ -32,10 +32,46 @@ The folder `my_tests` contains the some Bazel tests performed by myself, using t
 
 ## Test 1
 
-Simply creating a chain of dependencies: lib1 (Vehicle) -> lib2 (Car) -> main (using Car):
+It creates a building chain of dependencies: lib1 (Vehicle) -> lib2 (Car) -> main (using Car):
 
 ![](my_tests/test1/dependencies_graph.png)
 
 > Note: To generate this kind of images, simply install `xdot` and execute:
 > `xdot <(bazel query --notool_deps --noimplicit_deps "deps(//main:test-cars)" --output graph)`
+
+As you can see in the picture, there are 3 packages (main, car and vehicle), being the main one `main`, where the executable file is compiled. It depends on `car`, where the Car library is compiled depending on the `vehicle` package, in particular, on the `vehicle:vehicle` target, that is library containing the class Vehicle.
+
+To compile it:
+
+```bash
+cd my_tests/test1
+bazel build //main:test-cars
+```
+
+> Note: It will compile the libs because they are dependencies.
+
+or compile all targets (let's suppose there is another executable, for example):
+
+```bash
+cd my_tests/test1
+bazel build //...
+```
+
+And run it using:
+
+```bash
+./bazel-bin/main/test-cars
+```
+
+or
+
+```bash
+bazel run main:test-cars
+```
+
+## Test 2
+
+In this test, we simply check how to create an executable using a library that is defined in other workspace. To be able to access to it, we have to add a rule in the `WORKSPACE` file, defining the location of this other workspace. Then, we can access to it in the `BUILD` file using `@other_workspace_name`.
+
+For more information about it and how to use other external projects (CMake, Online, ... ) check this [link](https://bazel.build/build/external).
 
