@@ -30,7 +30,7 @@ Then, take a look to the main Bazel [concepts](https://bazel.build/concepts/buil
 
 The folder `my_tests` contains the some Bazel tests performed by myself, using the information from the previous links together the info from the [Build Encyclopedia](https://bazel.build/reference/be/overview)
 
-## Test 1
+## Test 1 - Building multiple dependent packages 
 
 It creates a building chain of dependencies: lib1 (Vehicle) -> lib2 (Car) -> main (using Car):
 
@@ -69,13 +69,45 @@ or
 bazel run main:test-cars
 ```
 
-## Test 2
+If you need to clean all the compilation files, simply execute
+
+```bash
+bazel clean
+```
+
+## Test 2 - Dependencies between multiple Workspaces
 
 In this test, we simply check how to create an executable using a library that is defined in other workspace. To be able to access to it, we have to add a rule in the `WORKSPACE` file, defining the location of this other local workspace. Then, we can access to it in the `BUILD` file using `@other_workspace_name`.
 
 For more information about it and how to use other external projects (CMake, Online, ... ) check this [link](https://bazel.build/build/external).
 
-## Test 3
+## Test 3 - Building multiple source and header files
 
 When using multiple headers and sources files, we can use some tricks to build all together in, for example, a library. Check how we do it in the `libs` package BUILD file, and how we use it in the `main` package.
 
+## Test 4 - Including an external library from an online repository and using Google Tests.
+
+Let's start from the previous test (3) workspace and add some Google Tests of our Car class in a new package called `tests`. 
+
+To do so, we need to get first this repository and make it visible for Bazel and our packages. In this case, it is really simple because [Google Test](https://github.com/google/googletest) already contains a Bazel BUILD file. So, we simply add a `git_repository` rule to our WORKSPACE file so it is downloaded and visible through the name that we select (gtest). Check it!
+
+Then, we just need to add in the tests package's BUILD file a `cc_test` rule, that is equivalent to cc_binary, and link to out tests executable the Google Test library `gtest_main` as any other library: `@gtest//:gtest_main`.
+
+To compile, use the usual commands. In this case, you will see how Google Test repository is downloaded and compiled.
+
+To run the tests, you can use the bazel's specific command:
+
+```bash
+bazel test tests:test_car
+```
+The previous command doesn't show too much information about the tests. Use the "run" one to get more information:
+
+```bash
+bazel run tests:test_car
+```
+
+or run directly the executable
+
+```bash
+./bazel-bin/tests/test_car
+```
