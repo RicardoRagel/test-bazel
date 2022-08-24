@@ -127,3 +127,11 @@ Another way to include a system-provided or installed library is creating a "fak
 * In our package BUILD file, add a `deps` to this `@<repository>//:<the_lib>` in the rule of the target that needs to use it.
 
 [Here](https://www.stevenengelhardt.com/2021/09/22/practical-bazel-depending-on-a-system-provided-c-cpp-library/) you can fing another solution using `cc_import`, perhaps more accurate.
+
+## Test 7 - Using a Third-Party library
+
+This is a test about how to use a library provided by another collaborator (for example a standalone SDK that a company distribute as a shared .so library together with some headers files). 
+
+In this case, we have to use it in Bazel as we have the source files (in this case the .so) and the headers files, creating a cc_library rule for that and using the target as a `deps` of our program. 
+
+This example uses the generated library from the Test 4 (AllVehicles.so) included in a folder `third-party` of the `main` package.
