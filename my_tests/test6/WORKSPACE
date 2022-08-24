@@ -1,0 +1,5 @@
+new_local_repository(
+    name = "pthreads",
+    path = "/usr",
+    build_file = "pthreads.BUILD"
+)

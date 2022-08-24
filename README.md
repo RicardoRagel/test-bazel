@@ -116,4 +116,14 @@ or run directly the executable
 
 ## Test 5 - Using a System-provided C++ library
 
-There are some options to add a system-provided (precompiled) library to our program. In this example, we simply add it to our cc_binary using the 
+There are some options to add a system-provided (precompiled) library to our program. In this example, we simply add it to our cc_binary using the `linkopts` argument, that allow us to pass directly this kind of gcc options to our executable compilation.
+
+## Test 6 - Using a System-provided C++ library (II)
+
+Another way to include a system-provided or installed library is creating a "fake" Bazel module for this library. Basically, we need:
+
+* In the WORKSPACE file, add a `new_local_repository` pointing to the path where this library is and specifying a new `<the_lib>.BUILD` file to specify this library in the same directory that the WORKSPACE file.
+* Create this `<the_lib>.BUILD` (in this example: `pthread.BUILD`) specifying the library (.so or .a) and the header file in case.
+* In our package BUILD file, add a `deps` to this `@<repository>//:<the_lib>` in the rule of the target that needs to use it.
+
+[Here](https://www.stevenengelhardt.com/2021/09/22/practical-bazel-depending-on-a-system-provided-c-cpp-library/) you can fing another solution using `cc_import`, perhaps more accurate.
