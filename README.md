@@ -89,7 +89,9 @@ When using multiple headers and sources files, we can use some tricks to build a
 
 Let's start from the previous test (3) workspace and add some Google Tests of our Car class in a new package called `tests`. 
 
-To do so, we need to get first this repository and make it visible for Bazel and our packages. In this case, it is really simple because [Google Test](https://github.com/google/googletest) already contains a Bazel BUILD file. So, we simply add a `git_repository` rule to our WORKSPACE file so it is downloaded and visible through the name that we select (gtest). Check it!
+To do so, we need to get first this repository and make it visible for Bazel and our packages. In this case, it is really simple because [Google Test](https://github.com/google/googletest) already contains a Bazel BUILD file. So, we simply add a `git_repository` rule to our WORKSPACE file so it is downloaded and visible through the name that we select (`gtest`). Check it in the WORKSPACE file.
+
+> Note: In case the external library repository doesn't contain this bazel BUILD file, it is necessary to create a `gtest.BUILD` (obviously, gtest only this repository case) for it in our workspace with the rules to compile and make the libs visible for our `tests` package. Check this case in the [Bazel's user guide](https://bazel.build/tutorials/cpp-use-cases#include-external-libraries): 
 
 Then, we just need to add in the tests package's BUILD file a `cc_test` rule, that is equivalent to cc_binary, and link to out tests executable the Google Test library `gtest_main` as any other library: `@gtest//:gtest_main`.
 
@@ -111,3 +113,7 @@ or run directly the executable
 ```bash
 ./bazel-bin/tests/test_car
 ```
+
+## Test 5 - Using a System-provided C++ library
+
+There are some options to add a system-provided (precompiled) library to our program. In this example, we simply add it to our cc_binary using the 
