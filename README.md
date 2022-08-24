@@ -71,7 +71,11 @@ bazel run main:test-cars
 
 ## Test 2
 
-In this test, we simply check how to create an executable using a library that is defined in other workspace. To be able to access to it, we have to add a rule in the `WORKSPACE` file, defining the location of this other workspace. Then, we can access to it in the `BUILD` file using `@other_workspace_name`.
+In this test, we simply check how to create an executable using a library that is defined in other workspace. To be able to access to it, we have to add a rule in the `WORKSPACE` file, defining the location of this other local workspace. Then, we can access to it in the `BUILD` file using `@other_workspace_name`.
 
 For more information about it and how to use other external projects (CMake, Online, ... ) check this [link](https://bazel.build/build/external).
+
+## Test 3
+
+When using multiple headers and sources files, we can use some tricks to build all together in, for example, a library. Check how we do it in the `libs` package BUILD file, and how we use it in the `main` package.
 
